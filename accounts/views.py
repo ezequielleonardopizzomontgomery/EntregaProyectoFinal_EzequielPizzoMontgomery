@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate, login as django_login
-
+from accounts.forms import MiFormularioDeCreacionDeUsuarios
 
 def login(request):
     
@@ -21,3 +21,16 @@ def login(request):
     
     formulario = AuthenticationForm()
     return render(request, 'accounts/login.html', {'formulario':formulario})
+
+
+def registrarse(request):
+    if request.method == 'POST':
+        formulario =MiFormularioDeCreacionDeUsuarios(request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            return redirect ('accounts:login')
+        else:
+            return render(request , 'accounts/registro.html', {'formulario':formulario})
+    
+    formulario = MiFormularioDeCreacionDeUsuarios()
+    return render(request , 'accounts/registro.html', {'formulario':formulario})
