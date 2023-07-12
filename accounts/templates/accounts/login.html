@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}<title>Login</title>{% endblock %}
+
+{% block heading %}¡Login!{% endblock %}
+
+{% block content %}
+<form action={% url 'accounts:login' %} method="POST">
+    {% csrf_token %}
+    <table>
+        {{formulario}}
+    </table>
+    <button>Login</button>
+</form>
+{% endblock content %}
