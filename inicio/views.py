@@ -1,45 +1,41 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Book
+from django.urls import reverse_lazy
 from .forms import BookForm
+from django.views import View
 
+class InicioView(View):
+    def get(self, request):
+        contexto = {
+            'mensaje': ''
+        }
+        return render(request, 'inicio/inicio.html', contexto)
 
-def inicio(request):
-    return render(request, 'inicio/inicio.html')
+class BookListView(ListView):
+    model = Book
+    template_name = 'book_list.html'
+    context_object_name = 'books'
 
+class BookDetailView(DetailView):
+    model = Book
+    template_name = 'inicio/book_detail.html'
+    context_object_name = 'book'
 
-def book_list(request):
-    books = Book.objects.all()
-    return render(request, 'inicio/book_list.html', {'books': books})
+class BookCreateView(CreateView):
+    model = Book
+    template_name = 'inicio/book_create.html'
+    form_class = BookForm
+    success_url = reverse_lazy('inicio:book_list')
 
-def book_detail(request, pk):
-    book = Book.objects.get(pk=pk)
-    return render(request, 'inicio/book_detail.html', {'book': book})
-
-def book_create(request):
-    if request.method == 'POST':
-        form = BookForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('inicio/book_list')
-    else:
-        form = BookForm()
-    return render(request, 'inicio/book_create.html', {'form': form})
-
-def book_update(request, pk):
-    book = Book.objects.get(pk=pk)
-    if request.method == 'POST':
-        form = BookForm(request.POST, request.FILES, instance=book)
-        if form.is_valid():
-            form.save()
-            return redirect('inicio/book_list')
-    else:
-        form = BookForm(instance=book)
-    return render(request, 'inicio/book_update.html', {'form': form, 'book': book})
-
-def book_delete(request, pk):
-    book = Book.objects.get(pk=pk)
-    if request.method == 'POST':
-        book.delete()
-        return redirect('inicio/book_list')
-    return render(request, 'inicio/book_delete.html', {'book': book})
+class BookUpdateView(UpdateView):
+    model = Book
+    template_name = 'inicio/book_update.html'
+    form_class = BookForm
+    success_url = reverse_lazy('inicio:book_list')
+    
+class BookDeleteView(DeleteView):
+    model = Book
+    template_name = 'inicio/book_confirm_delete.html'
+    success_url = reverse_lazy('inicio:book_list')
 

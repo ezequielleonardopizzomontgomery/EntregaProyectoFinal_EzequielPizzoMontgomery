@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Eliminar Libro - My Bookstore</title>
+{% endblock title %}
+
+{% block heading %}
+    Eliminar Libro
+{% endblock heading %}
+
+{% block content %}
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 offset-lg-3">
+                    <h2 class="mb-4">Eliminar Libro</h2>
+                    <p>¿Estás seguro de que deseas eliminar el libro "{{ book.titulo }}"?</p>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                        <a href="{% url 'inicio:book_detail' book.pk %}" class="btn btn-primary">Cancelar</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

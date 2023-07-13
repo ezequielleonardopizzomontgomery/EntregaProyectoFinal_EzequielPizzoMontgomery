@@ -1,18 +1,34 @@
 
 {% extends 'base.html' %}
 
+{% block title %}
+    <title>Lista de Libros - My Bookstore</title>
+{% endblock title %}
+
+{% block heading %}
+    Lista de Libros
+{% endblock heading %}
+
 {% block content %}
-  <h1>Lista de Libros</h1>
-
-  <ul>
-    {% for book in books %}
-      <li>
-        <a href="{% url 'book_detail' pk=book.pk %}">{{ book.title }}</a> - {{ book.author }}
-      </li>
-    {% empty %}
-      <li>No se encontraron libros.</li>
-    {% endfor %}
-  </ul>
-
-  <a href="{% url 'book_create' %}">Crear Nuevo Libro</a>
-{% endblock %}
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                {% for book in books %}
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card h-100">
+                            <img class="card-img-top" src="{{ book.imagen_del_libro.url }}" alt="{{ book.titulo }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ book.titulo }}</h5>
+                                <p class="card-text">{{ book.autor }}</p>
+                                <p class="card-text">{{ book.precio }}</p>
+                                <a href="{% url 'inicio:book_detail' book.pk %}" class="btn btn-primary">Ver más</a>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p>No hay libros disponibles.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock content %}

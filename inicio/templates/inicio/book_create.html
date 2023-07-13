@@ -1,11 +1,26 @@
 {% extends 'base.html' %}
 
-{% block content %}
-  <h1>Crear Nuevo Libro</h1>
+{% block title %}
+    <title>Crear Libro - My Bookstore</title>
+{% endblock title %}
 
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Guardar</button>
-  </form>
-{% endblock %}
+{% block heading %}
+    Crear Libro
+{% endblock heading %}
+
+{% block content %}
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 offset-lg-3">
+                    <h2 class="mb-4">Crear Libro</h2>
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

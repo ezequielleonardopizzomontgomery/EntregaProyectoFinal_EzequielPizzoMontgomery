@@ -1,11 +1,15 @@
 from django.urls import path
-from . import views
+from .views import BookListView, BookDetailView, BookUpdateView, BookDeleteView ,BookCreateView , InicioView
+
+
+app_name = 'inicio'
 
 urlpatterns = [
-    path('', views.inicio, name='inicio'),
-    path('books/', views.book_list, name='book_list'),
-    path('books/create/', views.book_create, name='book_create'),
-    path('books/<int:pk>/', views.book_detail, name='book_detail'),
-    path('books/<int:pk>/update/', views.book_update, name='book_update'),
-    path('books/<int:pk>/delete/', views.book_delete, name='book_delete'),
+    path('', InicioView.as_view(), name='inicio'),
+    path('listar_libros/', BookListView.as_view(), name='book_list'),
+    path('create/', BookCreateView.as_view(), name='book_create'),
+    path('<int:pk>/', BookDetailView.as_view(), name='book_detail'),
+    path('<int:pk>/update/', BookUpdateView.as_view(), name='book_update'),
+    path('<int:pk>/delete/', BookDeleteView.as_view(), name='book_delete'),
 ]
+

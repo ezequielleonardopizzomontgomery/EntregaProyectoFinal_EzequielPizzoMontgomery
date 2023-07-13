@@ -15,7 +15,7 @@ def login(request):
             user = authenticate(username=usuario, password=contrasenia)
             
             django_login(request, user)
-            return redirect('inicio')
+            return redirect('inicio:inicio')
         else:
             return render(request, 'accounts/login.html', {'formulario':formulario})
     

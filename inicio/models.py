@@ -4,17 +4,16 @@ from ckeditor.fields import RichTextField
 
 def book_image_directory(instance, filename):
     # Define la ruta de almacenamiento de las imágenes de libros
-    return f'book_images/{instance.title}/{filename}'
+    return f'book_images/{instance.titulo}/{filename}'
 
 class Book(models.Model):
-    title = models.CharField(max_length=200)
-    author = models.CharField(max_length=100)
-    description = RichTextField()
-    price = models.DecimalField(max_digits=8, decimal_places=2)
-    seller = models.ForeignKey(User, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to=book_image_directory)
-    created_at = models.DateTimeField(auto_now_add=True)
+    titulo = models.CharField(max_length=200)
+    autor = models.CharField(max_length=100)
+    descripcion = RichTextField()
+    precio = models.DecimalField(max_digits=8, decimal_places=2)
+    vendedor = models.ForeignKey(User, on_delete=models.CASCADE)
+    imagen_del_libro = models.ImageField(upload_to=book_image_directory)
+    creado = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.title
-
+        return self.titulo
