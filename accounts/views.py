@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate, login as django_login
+from django.contrib.auth.decorators import login_required
 from accounts.forms import MiFormularioDeCreacionDeUsuarios
 
 def login(request):
@@ -34,3 +35,8 @@ def registrarse(request):
     
     formulario = MiFormularioDeCreacionDeUsuarios()
     return render(request , 'accounts/registro.html', {'formulario':formulario})
+
+@login_required
+def edicion_perfil(request):
+    formulario = MiFormularioDeCreacionDeUsuarios(instance=request.user)
+    return render(request, 'accounts/edicion_perfil.html', {'formulario':formulario})

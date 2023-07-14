@@ -4,6 +4,7 @@ from .models import Book
 from django.urls import reverse_lazy
 from .forms import BookForm
 from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 class InicioView(View):
     def get(self, request):
@@ -28,14 +29,13 @@ class BookCreateView(CreateView):
     form_class = BookForm
     success_url = reverse_lazy('inicio:book_list')
 
-class BookUpdateView(UpdateView):
+class BookUpdateView(LoginRequiredMixin, UpdateView):
     model = Book
     template_name = 'inicio/book_update.html'
     form_class = BookForm
     success_url = reverse_lazy('inicio:book_list')
     
-class BookDeleteView(DeleteView):
+class BookDeleteView(LoginRequiredMixin,DeleteView):
     model = Book
     template_name = 'inicio/book_confirm_delete.html'
     success_url = reverse_lazy('inicio:book_list')
-

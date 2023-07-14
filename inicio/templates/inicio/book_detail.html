@@ -20,6 +20,7 @@
                     <p class="mb-3"><strong>Autor:</strong> {{ book.autor }}</p>
                     <p class="mb-3"><strong>Descripción:</strong> {{ book.descripcion | safe }}</p>
                     <p class="mb-3"><strong>Precio:</strong> ${{ book.precio }}</p>
+                    <p class="mb-3"><strong>Fecha de creación:</strong> {{ book.creado }}</p>
                     {% if request.user == book.vendedor %}
                         <a href="{% url 'inicio:book_update' book.pk %}" class="btn btn-primary">Modificar</a>
                     {% endif %}

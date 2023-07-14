@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}<title>Perfil</title>{% endblock %}
+
+{% block heading %}Editar Perfil{% endblock %}
+
+{% block content %}
+    <form action={%url 'inicio:inicio' %} method= "post">
+        {%csrf_token%}
+        {{formulario}}
+        <button>Guardar cambios</button>
+    <form>
+{% endblock content %}
