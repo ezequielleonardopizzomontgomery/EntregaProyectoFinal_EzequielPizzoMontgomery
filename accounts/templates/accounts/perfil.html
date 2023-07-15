@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Editar perfil</title>
+{% endblock title %}
+
+{% block heading %}
+Editar perfil
+{% endblock heading %}
+
+{% block content %}
+<form action="{% url 'accounts:editar_perfil' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_table }}
+</form>
+{% endblock content %}

@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login as django_login
 from django.contrib.auth.decorators import login_required
-from accounts.forms import MiFormularioDeCreacionDeUsuarios
+from accounts.forms import MiFormularioDeCreacionDeUsuarios, MiFormularioDeEdicionDeDatosDelUsuario
+from django.urls import reverse_lazy
+from accounts.models import InfoExtra
 
 def login(request):
     
@@ -16,6 +18,9 @@ def login(request):
             user = authenticate(username=usuario, password=contrasenia)
             
             django_login(request, user)
+            
+            InfoExtra.objects.get_or_create(user=user)
+            
             return redirect('inicio:inicio')
         else:
             return render(request, 'accounts/login.html', {'formulario':formulario})
@@ -38,5 +43,21 @@ def registrarse(request):
 
 @login_required
 def edicion_perfil(request):
-    formulario = MiFormularioDeCreacionDeUsuarios(instance=request.user)
-    return render(request, 'accounts/edicion_perfil.html', {'formulario':formulario})
+    info_extra_user = request.user.infoextra
+    if request.method == 'POST':
+        formulario = MiFormularioDeEdicionDeDatosDelUsuario(request.POST, request.FILES,instance=request.user)
+        if formulario.is_valid():
+            
+            avatar = formulario.cleaned_data.get('avatar')
+            if avatar:
+                info_extra_user.avatar = avatar
+                info_extra_user.save()
+            
+            formulario.save()
+            return redirect('inicio:inicio')
+    else:
+        formulario = MiFormularioDeEdicionDeDatosDelUsuario(initial={'avatar':info_extra_user.avatar},instance=request.user)
+        
+    return render (request, 'accounts/edicion_perfil.html',{'formulario': formulario})
+    ##formulario = MiFormularioDeCreacionDeUsuarios(instance=request.user)
+    ##return render(request, 'accounts/edicion_perfil.html', {'formulario':formulario})
