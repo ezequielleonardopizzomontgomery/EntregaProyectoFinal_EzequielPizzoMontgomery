@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}<title>Modificar Pass</title>{% endblock %}
+
+{% block heading %}¡Modificar Contraseña!{% endblock %}
+
+{% block content %}
+<form action={% url 'accounts:modificar_pass' %} method="POST" >
+    {% csrf_token %}
+    <table>
+        {{form}}
+    </table>
+    <button>Guardar Cambios</button>
+</form>
+{% endblock content %}

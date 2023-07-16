@@ -9,7 +9,7 @@ def book_image_directory(instance, filename):
 class Book(models.Model):
     titulo = models.CharField(max_length=200)
     autor = models.CharField(max_length=100)
-    descripcion = RichTextField()
+    descripcion = RichTextField(null=True)
     precio = models.DecimalField(max_digits=8, decimal_places=2)
     vendedor = models.ForeignKey(User, on_delete=models.CASCADE)
     imagen_del_libro = models.ImageField(upload_to=book_image_directory)

@@ -16,15 +16,17 @@
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+
     </head>
     <body>
         <!-- Navigation-->
         <nav class="navbar navbar-light bg-light static-top">
             <div class="container">
-                <a class="btn btn-primary" href="{% url 'inicio:book_list' %}">Lista de Libros</a>
+                <a class="btn btn-primary" href="{% url 'inicio:book_list' %}" >Lista de Libros</a>
                 <a class="btn btn-primary" href="{% url 'inicio:book_create' %}">Crear Libro</a>
+                <a class="btn btn-primary" href="{% url 'accounts:informacion_pagina' %}">Acerca de Mi</a>
                 {% if request.user.is_authenticated %}
-                {% if request.user.info.extra.avatar %}
+                {% if request.user.infoextra.avatar %}
                 <Img src={{request.user.infoextra.avatar.url}} alt=""height=='40px'>
                 {% endif %}
                 <a class="btn btn-secondary" href="{% url 'accounts:edicion_perfil' %}">{{request.user.username}}</a>

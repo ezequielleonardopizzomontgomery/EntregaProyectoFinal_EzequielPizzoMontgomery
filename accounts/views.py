@@ -1,10 +1,14 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect 
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login as django_login
 from django.contrib.auth.decorators import login_required
+from django.views import View
 from accounts.forms import MiFormularioDeCreacionDeUsuarios, MiFormularioDeEdicionDeDatosDelUsuario
+from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from accounts.models import InfoExtra
+
 
 def login(request):
     
@@ -59,5 +63,14 @@ def edicion_perfil(request):
         formulario = MiFormularioDeEdicionDeDatosDelUsuario(initial={'avatar':info_extra_user.avatar},instance=request.user)
         
     return render (request, 'accounts/edicion_perfil.html',{'formulario': formulario})
-    ##formulario = MiFormularioDeCreacionDeUsuarios(instance=request.user)
-    ##return render(request, 'accounts/edicion_perfil.html', {'formulario':formulario})
+    
+class ModificarPass(LoginRequiredMixin, PasswordChangeView):
+    template_name = 'accounts/modificar_pass.html'
+    success_url = reverse_lazy('accounts:edicion_perfil')
+    
+def inicio(request):
+    contexto = {
+        'mensaje': ''
+    }
+    return render(request, 'accounts/informacion_pagina.html', contexto)
+

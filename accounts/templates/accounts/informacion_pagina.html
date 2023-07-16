@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}<title>Nuestra pagina</title>{% endblock %}
+
+{% block heading %}
+    <h1>Informacion de la pagina</h1>
+{% endblock %}
+
+{% block content %}
+    <form action={% url 'accounts:informacion_pagina' %} method="POST">
+        {% csrf_token %}
+        <p class='informacion' style="color: blue; font-family: 'Comic Sans MS', sans-serif;font-size: 20px;">
+           Esta es la informacion de nuestra pagina hecha por Nicolas Gabriel Gonzalez y Ezequiel Pizzo Montgomery.<br>
+           Nicolas Goznzalez: Empleado en soporte tecnico, busco nuevos aprendizajes, y mas desarrollos en la tecnologia.<br>
+           Ezequiel Pizzo Montgomery: Empleado en pasteleria, desarrollar nuestra actividad/proyecto y mejorar las tecnicas en informatica.<br>
+           Para este proyecto se diseño una pagina en la que cada usuario pueda cargar, ver y cambiar y eliminar libros para su compra y venta simpre y cuando tenga su usario logueado. <br>
+           En esta pagina se utilizaron django, sql, html, css y librerias.
+        </p>
+    </form>
+{% endblock content %}
+
+
